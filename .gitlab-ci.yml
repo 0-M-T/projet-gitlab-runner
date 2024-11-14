@@ -15,5 +15,3 @@ test_job:
   script:
     - hatch env create  # Crée l'environnement virtuel pour le projet avec Hatch
     - hatch run test    # Lance les tests unitaires
-  tag:
-    -docker
