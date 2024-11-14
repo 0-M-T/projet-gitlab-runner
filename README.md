@@ -1,94 +1,161 @@
-# projet gitlab runner
+# Rapport : Mise en place d'un pipeline CI/CD avec GitLab et Hatch
+
+## 1. Création du projet avec Hatch
+La première étape a consisté à créer un projet Python avec **Hatch**, un gestionnaire d'environnements pour les projets Python. En exécutant la commande hatch new my-arithmetic-$USER, la structure du projet a été générée correctement, incluant les répertoires nécessaires tels que src/ et tests/.
+
+**Problème rencontré :**
+Aucun problème rencontré durant cette étape.
+
+---
+
+## 2. Implémentation de la fonction PGCD
+J'ai ensuite implémenté une fonction qui calcule le Plus Grand Commun Diviseur (PGCD) de deux nombres. La fonction a été ajoutée dans le fichier gcd.py situé dans le dossier src/my_arithmetic/.
+
+**Code de la fonction :**
+
+python
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+**Problème rencontré :**
+Aucun problème rencontré lors de l'implémentation de cette fonction.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+---
 
-## Add your files
+## 3. Création des tests unitaires
+J'ai créé un fichier de tests, test_gcd.py, dans le dossier tests/ pour vérifier que la fonction PGCD fonctionne correctement. Plusieurs cas de test ont été ajoutés pour couvrir différents scénarios (valeurs positives, zéro, etc.).
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+**Code des tests :**
 
-```
-cd existing_repo
-git remote add origin https://gitlab.univ-lr.fr/tmaucote/projet-gitlab-runner.git
-git branch -M main
-git push -uf origin main
-```
+python
+import unittest
+from my_arithmetic.gcd import gcd
 
-## Integrate with your tools
+class TestGCD(unittest.TestCase):
+    def test_gcd(self):
+        self.assertEqual(gcd(48, 18), 6)
+        self.assertEqual(gcd(101, 10), 1)
+        self.assertEqual(gcd(0, 0), 0)
+        self.assertEqual(gcd(7, 0), 7)
+        self.assertEqual(gcd(0, 5), 5)
 
-- [ ] [Set up project integrations](https://gitlab.univ-lr.fr/tmaucote/projet-gitlab-runner/-/settings/integrations)
+if __name__ == "__main__":
+    unittest.main()
 
-## Collaborate with your team
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
-## Test and Deploy
+**Problème rencontré :**
+Aucun problème rencontré lors de la création et de l'exécution des tests unitaires.
 
-Use the built-in continuous integration in GitLab.
+---
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## 4. Exécution des tests avec Hatch
+Une fois les tests créés, j'ai activé l'environnement virtuel avec Hatch et exécuté les tests via les commandes suivantes :
 
-***
+bash
+hatch shell
+hatch test
 
-# Editing this README
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Les tests ont été exécutés avec succès et tous les tests ont passé sans erreur.
 
-## Suggestions for a good README
+**Problème rencontré :**
+Aucun problème rencontré lors de l'exécution des tests.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+---
 
-## Name
-Choose a self-explaining name for your project.
+## 5. Installation et configuration de GitLab Runner
+L'installation de **GitLab Runner** a causé un problème initial : la commande gitlab-runner n'était pas reconnue car le chemin d'installation n'était pas ajouté au PATH.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+**Solution :**
+J'ai ajouté le dossier d'installation de GitLab Runner au PATH du système, ce qui a permis de résoudre ce problème.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+---
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## 6. Liaison de GitLab Runner avec le projet
+Après l'installation de GitLab Runner, j'ai tenté de le lier à mon projet GitLab en utilisant la commande suivante :
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+bash
+.\gitlab-runner.exe register --url https://gitlab.univ-lr.fr --token glrt-t3_NeUqYyFpe1F5GzsB-GxL
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Une erreur liée à la commande git non reconnue est apparue.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+**Solution :**
+J'ai installé Git et ajouté son dossier au PATH. J'ai ensuite configuré Git avec les commandes :
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+bash
+git config --global user.name "TonNom"
+git config --global user.email "TonEmail@example.com"
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+---
 
-## License
-For open source projects, say how it is licensed.
+## 7. Création du fichier .gitlab-ci.yml
+Le fichier .gitlab-ci.yml a été créé pour configurer le pipeline CI/CD et exécuter les tests unitaires à chaque modification de code. Voici le contenu du fichier :
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+yaml
+image: python:3.11
 
+stages:
+  - test
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+before_script:
+  - pip install --upgrade pip
+  - pip install hatch
+
+test_job:
+  stage: test
+  script:
+    - hatch env create
+    - hatch run test
+
+
+
+**Problème rencontré :**
+Aucun problème rencontré lors de la création et de la configuration du fichier .gitlab-ci.yml.
+
+---
+
+## 8. Pousser les modifications sur GitLab
+Une fois le fichier .gitlab-ci.yml créé, j'ai ajouté, commité et poussé les modifications vers le dépôt GitLab avec les commandes :
+
+bash
+git add .gitlab-ci.yml
+git commit -m "Ajout du fichier .gitlab-ci.yml pour exécution des tests unitaires"
+git push origin main
+
+
+
+**Problème rencontré :**
+Initialement, la commande git n'était pas reconnue. Cela a été résolu après l'installation de Git et la mise à jour du PATH.
+
+---
+
+## 9. Vérification du pipeline sur GitLab
+Après avoir poussé les modifications, j'ai vérifié que le pipeline CI/CD était correctement exécuté dans GitLab, sous **CI/CD > Pipelines**. Les tests unitaires ont été lancés automatiquement et ont réussi sans erreur.
+
+---
+
+## Conclusion
+### Problèmes rencontrés :
+- Git n'était pas installé correctement sur Windows, ce qui a empêché l'exécution des commandes Git et la liaison de GitLab Runner au projet.
+- Le chemin d'installation de GitLab Runner n'était pas ajouté au PATH, causant des erreurs lors de l'enregistrement du runner.
+
+### Solutions apportées :
+- Installation correcte de Git et ajout au PATH.
+- Ajout du chemin d'installation de GitLab Runner au PATH.
+
+### Résultat :
+Le pipeline CI/CD fonctionne désormais correctement et exécute les tests unitaires à chaque modification de code, comme prévu.
+
+---
 [![coverage report](https://gitlab.univ-lr.fr/tmaucote/projet-gitlab-runner/badges/main/coverage.svg)](https://gitlab.univ-lr.fr/tmaucote/projet-gitlab-runner/-/commits/main)
