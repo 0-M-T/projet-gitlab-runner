@@ -18,23 +18,18 @@ before_script:
 #   tags:
 #    - docker
 test-job:
-  stage: test
-  tags:
-    - docker  # tag pour indiquer que ce job utilise Docker
-  script:
-    - set PYTHONPATH=%PYTHONPATH%;%cd%/src
-    - pip install --upgrade pip
-    - pip install hatch
-    - pip install pytest pytest-cov
-    - hatch test
-    - pytest --cov=src.projet-gitlab-runner.gdc --cov-report=xml:coverage.xml --cov-report=term-missing
+    script:
+      - set PYTHONPATH=%PYTHONPATH%;%cd%/src  # Commande Windows
+      - pip install --upgrade pip
+      - pip install hatch
+      - pip install pytest pytest-cov
+      - hatch test
+      - pytest --cov=src.projet-gitlab-runner.gdc --cov-report=xml:coverage.xml --cov-report=term-missing
   artifacts:
     reports:
       coverage_report:
         coverage_format: cobertura
         path: coverage.xml
   coverage: '/TOTAL.*? (\d+\%)$/'
-
   tags:
-    - docker
-
+      - docker
