@@ -17,8 +17,6 @@ before_script:
 #     - hatch test    # Lance les tests unitaires
 #   tags:
 #    - docker
-image: mcr.microsoft.com/windows/servercore:ltsc2022  # Exemple d'image Docker Windows
-
 test-job:
   stage: test
   tags:
