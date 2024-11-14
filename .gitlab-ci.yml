@@ -1,0 +1,17 @@
+image: python:3.11  # Utilise une image Docker avec Python 3.11
+
+stages:
+  - test  # Étape unique pour les tests
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"  # Utilise un cache pour les dépendances Python
+
+before_script:
+  - pip install --upgrade pip  # Met à jour pip
+  - pip install hatch  # Installe Hatch pour gérer le projet
+
+test_job:
+  stage: test
+  script:
+    - hatch env create  # Crée l'environnement virtuel pour le projet avec Hatch
+    - hatch run test    # Lance les tests unitaires
