@@ -144,6 +144,18 @@ Initialement, la commande git n'était pas reconnue. Cela a été résolu après
 Après avoir poussé les modifications, j'ai vérifié que le pipeline CI/CD était correctement exécuté dans GitLab, sous **CI/CD > Pipelines**. Les tests unitaires ont été lancés automatiquement et ont réussi sans erreur.
 
 ---
+---
+
+## 10. Ajout de badge
+J'ai commencé à tester l'ajout de badge mais je n'ai malheureusement pas réussi d'ou mes dernières erreurs.
+
+---
+---
+
+## 11. Mirroir gitlab et github
+J'ai réussi à lier Gitlab et Github pour que chaque maj sur Gitlab soit envoyée sur Github.
+
+---
 
 ## Conclusion
 ### Problèmes rencontrés :
