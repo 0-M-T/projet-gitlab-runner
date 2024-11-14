@@ -1,5 +1,5 @@
-import pytest
-from my_arithmetic_svalerio import pgcd
+
+from my_arithmetic_tmaucotel import pgcd
 
 def test_pgcd():
     assert pgcd(56, 98) == 14
