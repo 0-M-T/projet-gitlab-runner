@@ -19,8 +19,8 @@ test_job:
     - pip install hatch
     - pip install pytest pytest-cov
     - hatch test
-tags:
- - docker
+  tags:
+  - docker
 
 # stages:
 #   - test
