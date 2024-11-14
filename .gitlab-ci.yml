@@ -17,8 +17,7 @@ test_job:
     - apk add gcc python3-dev musl-dev linux-headers
     - pip install --upgrade pip
     - pip install hatch
-    - pip install pytest pytest
-    - cov
+    - pip install pytest pytest-cov
     - hatch test
     - pytest --cov=src.projet-gitlab-runner.gdc --cov-report=xml --cov-report=term-missing
 artifacts:
