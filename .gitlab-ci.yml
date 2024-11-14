@@ -22,7 +22,6 @@ test-job:
   stage: test
   script:
     - set PYTHONPATH=%PYTHONPATH%;%cd%/src
-    - apt-get update && apt-get install -y gcc python3-dev musl-dev linux-headers
     - pip install --upgrade pip
     - pip install hatch
     - pip install pytest pytest-cov
