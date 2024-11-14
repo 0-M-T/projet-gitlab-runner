@@ -16,4 +16,4 @@ test_job:
     - hatch env create  # Crée l'environnement virtuel pour le projet avec Hatch
     - hatch run test    # Lance les tests unitaires
   tags:
-    -docker
+    - docker
