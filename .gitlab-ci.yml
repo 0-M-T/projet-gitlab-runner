@@ -13,14 +13,10 @@ before_script:
 test_job:
   stage: test
   script:
-    - export PYTHONPATH=$PYTHONPATH:$(pwd)/src
-    - apk add gcc python3-dev musl-dev linux-headers
-    - pip install --upgrade pip
-    - pip install hatch
-    - pip install pytest pytest-cov
-    - hatch test
+    - hatch env create  # Crée l'environnement virtuel pour le projet avec Hatch
+    - hatch test    # Lance les tests unitaires
   tags:
-  - docker
+   - docker
 
 # stages:
 #   - test
