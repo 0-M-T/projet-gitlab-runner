@@ -24,7 +24,7 @@ test-job:
       - pip install hatch
       - pip install pytest pytest-cov
       - hatch test
-      - pytest --cov=src.projet-gitlab-runner.gdc --cov-report=xml:coverage.xml --cov-report=term-missing
+      - pytest --cov=src.projet-gitlab-runner.__init__ --cov-report=xml:coverage.xml --cov-report=term-missing
   artifacts:
     reports:
       coverage_report:
