@@ -20,10 +20,7 @@ test_job:
     - pip install pytest pytest
     - cov
     - hatch test
-    - pytest
-    - cov=src.myarithmeticsvalerio.__init
-    - cov-report=xml
-    - cov-report=term-missing
+    - pytest --cov=src.projet-gitlab-runner.gdc --cov-report=xml --cov-report=term-missing
 artifacts:
   reports:
     coverage_report:
