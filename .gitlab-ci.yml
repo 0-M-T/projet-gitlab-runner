@@ -18,7 +18,7 @@ before_script:
 #   tags:
 #    - docker
 
-test-job:
+    test-job:
   stage: test
   script:
     - export PYTHONPATH=$PYTHONPATH:$(pwd)/src
@@ -33,6 +33,6 @@ test-job:
       coverage_report:
         coverage_format: cobertura
         path: coverage.xml 
-  coverage: '/TOTAL.*? (\d+\%)$/'   
-   tags :
+  coverage: '/TOTAL.*? (\d+\%)$/'
+  tags:
     - docker
