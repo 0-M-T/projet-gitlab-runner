@@ -25,11 +25,11 @@ test-job:
       - pip install pytest pytest-cov
       - hatch test
       - pytest --cov=src.projet-gitlab-runner.__init__ --cov-report=xml:coverage.xml --cov-report=term-missing
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml
-  coverage: '/TOTAL.*? (\d+\%)$/'
-  tags:
+    artifacts:
+      reports:
+        coverage_report:
+          coverage_format: cobertura
+          path: coverage.xml
+    coverage: '/TOTAL.*? (\d+\%)$/'
+    tags:
       - docker
